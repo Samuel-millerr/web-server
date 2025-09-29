@@ -1,0 +1,175 @@
+/* Todas as classes utilizadas em suma sao compartilhadas por todas as páginas html do projeto */
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    width: 30%;
+    padding: 1.25rem;
+    gap: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;   
+    background-color: #ffffff;
+    border-radius: 0.35rem;
+    color: #6C63FF;
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.4);
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 3rem 1.5rem 3rem;
+    background-color: #6C63FF;
+    color: white;
+}
+
+.linksHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    gap: 4rem;
+    font-size: 20px;
+}
+
+.linksHeader li {
+    transition: 1s;
+}
+
+.linksHeader li:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: white;
+}
+
+.linksHeader a {
+    text-decoration: none;
+    color: white;
+    transition: 2s;
+}
+
+.siteForm {
+    width: 90%;
+}
+
+.siteTitle{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 0.7rem;
+}
+
+.siteLabel {
+    align-self: start;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.siteInput {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 0.35rem;
+    font-size: 16px;
+    border: none;
+    background-color: #f0f2f5;
+    resize: none
+}
+
+.siteButton {
+    width: 100%;
+    font-weight: 600;
+    padding: 0.75rem;
+    margin-top: 2rem;
+    border-radius: 0.15rem;
+    border: none;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #6C63FF;
+    transition: 1s;
+}
+
+.siteButton:hover {
+    transform: translateY(-3px);
+}
+
+.links {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.links a{
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+    color: #6C63FF;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.links a:hover{
+    transform: scale(1.02);
+}
+
+.siteFilmGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.siteCardFilm {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    white-space: nowrap; 
+    overflow: hidden;   
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+    gap: 0.75rem;
+    width: 20%;
+    height: 15rem;
+    background-color: #f0f2f5;
+    border: 1px solid #656b74;
+    border-radius: 0.25rem;
+}
+
+#filmsListMain {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    width: 100%;
+    box-shadow: none;
+}
+
+#titleHeader {
+    padding: 0;
+    margin: 0;
+}

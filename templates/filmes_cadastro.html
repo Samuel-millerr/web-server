@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title> Cadastro de Filmes </title>
+    <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+    <main>
+        <h1 class="siteTitle">Cadastro de Filmes</h1>
+        <!-- A estrutura abaixo se consiste em um forms comum, com labels e inputs representando o que o usuário deve digitar -->
+        <form class="siteForm" action="/send_cadastro_filmes" method="POST">
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="title"> Nome do Filme </label>
+                <input type="text" class="siteInput" id="title" name="title" placeholder="Digite o nome do filme"/>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="actor"> Atores </label>
+                <textarea class="siteInput" id="actor" name="actor" placeholder="Digite os atores do filme"></textarea>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="director"> Diretor </label>
+                <input type="text" class="siteInput" id="director" name="director" placeholder="Digite o diretor do filme"/>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="year"> Ano de Lançamento </label>
+                <input type="number" min="1900" max="2099" class="siteInput" id="year" name="year" placeholder="Insira o ano do filme"/>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="genre "> Gênero </label>
+                <select class="siteInput" id="genre" name="genre">
+                    <option value=""></option>
+                    <option value="Ação">Ação</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Terror">Terror</option>
+                    <option value="Ficção Científica">Ficção Científica</option>
+                    <option value="Drama">Drama</option>
+                </select>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="producer"> Produtora </label>
+                <input type="text" class="siteInput" id="producer" name="producer" placeholder="Digite a produtora do filme"/>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="summary"> Sinopse </label>
+                <textarea class="siteInput" id="sumarry" name="summary" placeholder="Digite a Sinopse do filme"></textarea>
+            </div>
+            <button class="siteButton" type="submit"> Cadastrar </button>
+        </form>
+    </main>
+</body>
+</html>
