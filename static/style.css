@@ -144,7 +144,7 @@ header {
     background-color: #ffffff;
 }
 
-.siteCardFilm {
+.siteCardMovie {
     display: flex;
     flex-direction: column;
     align-items: start;

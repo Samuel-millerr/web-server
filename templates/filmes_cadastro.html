@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title> Cadastro de Filmes </title>
     <link rel="stylesheet" href="/static/style.css"/>
+    <script defer src="app/post_movie.js"></script>
 </head>
 <body>
     <main>
         <h1 class="siteTitle">Cadastro de Filmes</h1>
         <!-- A estrutura abaixo se consiste em um forms comum, com labels e inputs representando o que o usuário deve digitar -->
-        <form class="siteForm" action="/send_cadastro_filmes" method="POST">
+        <form id="postFilmsForm" class="siteForm">
             <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
                 <label class="siteLabel" for="title"> Nome do Filme </label>
                 <input type="text" class="siteInput" id="title" name="title" placeholder="Digite o nome do filme"/>
@@ -28,7 +29,7 @@
                 <input type="number" min="1900" max="2099" class="siteInput" id="year" name="year" placeholder="Insira o ano do filme"/>
             </div>
             <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
-                <label class="siteLabel" for="genre "> Gênero </label>
+                <label class="siteLabel" for="genre"> Gênero </label>
                 <select class="siteInput" id="genre" name="genre">
                     <option value=""></option>
                     <option value="Ação">Ação</option>
@@ -44,9 +45,9 @@
             </div>
             <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
                 <label class="siteLabel" for="summary"> Sinopse </label>
-                <textarea class="siteInput" id="sumarry" name="summary" placeholder="Digite a Sinopse do filme"></textarea>
+                <textarea class="siteInput" id="summary" name="summary" placeholder="Digite a Sinopse do filme"></textarea>
             </div>
-            <button class="siteButton" type="submit"> Cadastrar </button>
+            <button id="postFilmsButton" class="siteButton" type="submit"> Cadastrar </button>
         </form>
     </main>
 </body>
