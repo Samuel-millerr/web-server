@@ -2,6 +2,11 @@
     {
         "id": "1",
         "user": "samuel",
+        "pessoas": "1234"
+    },
+    {
+        "id": 2,
+        "user": "teste",
         "password": "1234"
     }
 ]

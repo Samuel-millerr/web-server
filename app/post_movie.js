@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8000/send_filmes';
+const URL = 'http://localhost:8000/send_movie';
 
 const postFilmsForm = document.getElementById('postFilmsForm');
 const filmsFormInputs = postFilmsForm.querySelectorAll('.siteInput');
@@ -11,7 +11,7 @@ function get_films_data() {
     return filmsData;
 }
 
-async function post_films(data) {
+async function post_film(data) {
     try {
         const response = await fetch(URL, {
             method: "POST",
@@ -24,7 +24,7 @@ async function post_films(data) {
         if (response.ok) {
             console.log('Filme cadastrado com sucesso.')
             alert("Filme cadastrado com sucesso!")
-             window.location.href = "/filmes_listagem"
+            window.location.href = "/filmes_listagem"
         }
     } catch(error){
         console.error("Erro de conexão: ", error);
@@ -34,5 +34,5 @@ async function post_films(data) {
 postFilmsForm.addEventListener('submit', (e) => {
     e.preventDefault(); 
     const filmsData = get_films_data();
-    post_films(filmsData); 
+    post_film(filmsData); 
 });
