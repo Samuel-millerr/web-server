@@ -4,16 +4,21 @@ const loginForm = document.getElementById('loginForm');
 const userForm = document.getElementById('user');
 const passwordForm = document.getElementById('password');
 
+/* Fetch utilizado para passar os dados digitados para o server, caso estejam corretos e de acordo com os dados armazenados no users.json é retornado
+um código 200 e o acesso do usuário é liberado */
+
 async function login(user, password){
     try {
-        const response = await fetch(URL, { // A variável 'response' aguarda a resposta do servidor para continuar o código atráves do metódo await
+        // A variável 'response' aguarda a resposta do servidor para continuar o código atráves do metódo await
+        const response = await fetch(URL, { 
             method: "post",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({user, password})
         });
-
+        
+        // Condição para avaliar qual código foi recibido e qual deve ser a ação do javascript
         if (response.ok){
             console.log("Login bem-sucedido!");
             alert("Login bem-sucedido! Seja bem vindo " + userForm.value);

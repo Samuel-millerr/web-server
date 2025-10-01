@@ -1,14 +1,16 @@
+/* Os dados do formulário são enviados para o servidor atráves do fetch e após isso sçao inseridos no 'movies.json' */
+
 const URL = 'http://localhost:8000/send_movie';
 
-const postFilmsForm = document.getElementById('postFilmsForm');
-const filmsFormInputs = postFilmsForm.querySelectorAll('.siteInput');
+const postMoviesForm = document.getElementById('postMoviesForm');
+const moviesFormInputs = postMoviesForm.querySelectorAll('.siteInput');
 
-function get_films_data() {
-    let filmsData = {};
-    filmsFormInputs.forEach(input => {
-        filmsData[input.id] = input.value;
+function get_movies_data() {
+    let moviesData = {};
+    moviesFormInputs.forEach(input => {
+        moviesData[input.id] = input.value;
     });
-    return filmsData;
+    return moviesData;
 }
 
 async function post_film(data) {
@@ -25,14 +27,16 @@ async function post_film(data) {
             console.log('Filme cadastrado com sucesso.')
             alert("Filme cadastrado com sucesso!")
             window.location.href = "/filmes_listagem"
+        } else {
+            console.error("Deu pau total.")
         }
     } catch(error){
         console.error("Erro de conexão: ", error);
     }
 }
 
-postFilmsForm.addEventListener('submit', (e) => {
+postMoviesForm.addEventListener('submit', (e) => {
     e.preventDefault(); 
-    const filmsData = get_films_data();
-    post_film(filmsData); 
+    const moviesData = get_movies_data();
+    post_film(moviesData); 
 });

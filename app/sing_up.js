@@ -5,6 +5,8 @@ const userForm = document.getElementById('user');
 const passwordForm = document.getElementById('password');
 const confirmPasswordForm = document.getElementById('confirmPassword');
 
+/* Fetch utilizado para passar os dados digitados para o server, caso as credenciais para o cadastro estejam de acordo com as regras definidas pelo server,
+o cadastro é liberado e o usuário é direcionado para a tela de login */
 async function singUp(user, password, confirmPassword){
     try {
         const response = await fetch(URL, {

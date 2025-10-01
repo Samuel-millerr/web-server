@@ -1,3 +1,7 @@
+/* Aqui consiste uma lógica para permitir a passagem de dados do 'movies.js' para o html, a principio é realizado um get em um endpoin feito pelo server, onde se localizam os filmes
+armazenados pelo 'movies.json', e os redenrizam na tela, além disso na passagem de dados par ao html é inserido dois botões enos cards dos filmes onde cada um possui uma função.
+As funções dos botões são definidas logo após as inserção dos dados dos filmes na tela, quando forem clicados, eles realizaram uma ação.*/
+
 const URL = 'http://localhost:8000/get_movies';
 const URL_DELETE = 'http://localhost:8000/delete_movie';
 
@@ -45,17 +49,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                 
                 filmesContainer.appendChild(card);
-
+                
+                // Evento do botão de update
                 const updateButton = card.querySelector('.updateButton');
-                updateButton.addEventListener('click', (e) => { 
+                updateButton.addEventListener('click', () => { 
+                    /* Para a edição dos filmes é necessário renderizar outra tela, por conta disso o metódo escolhido para a passagem de dados para a tela de edição foi o
+                    local storage, para evitar a necessidade de mais uma requisição GET para o servidor. Os dados do filme são recolhidos ao clicar no botão, onde são identificados pelo
+                    data-id definido na inserção de dados na tela. */
                     const id = updateButton.dataset.id;
                     localStorage.setItem('id', id);
                     localStorage.setItem('filme', JSON.stringify(filme))
                     window.location.href = "/filmes_edicao";
-                    // update_movie();
-                    // e.preventDefault()
                 });
-
+                
+                // Evento do botão de delete
                 const deleteButton = card.querySelector('.deleteButton');
                 deleteButton.addEventListener('click', () => {
                     const id = deleteButton.dataset.id;

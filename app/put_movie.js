@@ -1,3 +1,6 @@
+/* Arquivo utilizado para buscar o filme armazenado no local storage. É realizado um fetch para enviar os dados editados do formulário para o servidor,
+onde é realizado um substituição do filme antes armazenado no id para o novo filme */
+
 const URL_UPDATE = 'http://localhost:8000/update_movie';
 
 const film_id = localStorage.getItem('id');
