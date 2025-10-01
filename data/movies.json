@@ -1,6 +1,6 @@
 [
     {
-        "id": "0",
+        "id": 0,
         "title": "O Senhor dos Anéis: A Sociedade dos Aneis",
         "actor": "Elijah Wood, Ian McKellen, Viggo Mortensen",
         "director": "Peter Jackson",
@@ -10,7 +10,7 @@
         "summary": "Um jovem hobbit parte em uma jornada para destruir o Um Anel e impedir que o mal se espalhe pela Terra Média."
     },
     {
-        "id": "1",
+        "id": 1,
         "title": "A Origem",
         "actor": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page",
         "director": "Christopher Nolan",
