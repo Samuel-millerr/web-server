@@ -46,7 +46,7 @@ CREATE TABLE produtora(
 CREATE TABLE filme(
 	id_filme INTEGER AUTO_INCREMENT UNIQUE,
     titulo VARCHAR(100) NOT NULL UNIQUE, 
-    orcamento DECIMAL(10,2), 
+    orcamento INTEGER, 
     tempo_duracao TIME NOT NULL,
     ano_publicacao YEAR NOT NULL,
     poster VARCHAR(255) UNIQUE

@@ -23,6 +23,22 @@ class MyHandle(SimpleHTTPRequestHandler):
             self.send_error(404, "File Not Found")
         return super().list_directory(path)
 
+    def load_movies(self):
+        from core.settings import DB_CONNECTION
+
+        cursor = DB_CONNECTION.cursor()
+
+        filmes = cursor.execute("SELECT * FROM webflix.diretor")
+
+        result = cursor.fetchall()
+
+        for res in result:
+            id_filme = res[0]
+            filme = res[1]
+            print(id_filme, filme)
+
+        return filmes
+    
     def carregar_pagina(self, caminho):
         try:
             """ Função simples para reutilização de código, utilizada nos metódos GET para carregar a página """
