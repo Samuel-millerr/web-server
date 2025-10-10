@@ -36,12 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.classList.add('movieCard');
                 
                 card.innerHTML = `
-                    <h2>${filme.title} (${filme.year})</h2>
-                    <p><strong>Gênero:</strong> ${filme.genre}</p>
-                    <p><strong>Diretor:</strong> ${filme.director}</p>
-                    <p><strong>Atores:</strong> ${filme.actor}</p>
-                    <p><strong>Produtora:</strong> ${filme.producer}</p>
-                    <p><strong>Sinopse:</strong> ${filme.summary}</p>
+                    <h2>${filme.titulo} (${filme.ano_publicacao})</h2>
+                    <p><strong>Tempo Duração:</strong> ${filme.tempo_duracao}</p>
+                    <p><strong>Orçamento:</strong> ${filme.orcamento}</p>
+                    <img src="${filme.poster}" id="movie-poster"/>
                     <div>
                         <button type='button' class='updateButton' data-id=${filme.id}> Editar </button>
                         <button type='button' class='deleteButton' data-id=${filme.id}> Deletar </button>

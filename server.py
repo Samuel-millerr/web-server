@@ -28,16 +28,23 @@ class MyHandle(SimpleHTTPRequestHandler):
 
         cursor = DB_CONNECTION.cursor()
 
-        filmes = cursor.execute("SELECT * FROM webflix.diretor")
+        cursor.execute("SELECT * FROM webflix.filme")
 
         result = cursor.fetchall()
 
+        filmes_json = []
         for res in result:
-            id_filme = res[0]
-            filme = res[1]
-            print(id_filme, filme)
-
-        return filmes
+            filme = {
+                "id": int(res[0]),
+                "titulo": str(res[1]),
+                "orcamento": int(res[2]),
+                "tempo_duracao": str(res[3]),
+                "ano_publicacao": str(res[4]),
+                "poster": str(res[5])
+            }
+            filmes_json.append(filme)
+        
+        return filmes_json
     
     def carregar_pagina(self, caminho):
         try:
@@ -58,6 +65,7 @@ class MyHandle(SimpleHTTPRequestHandler):
 
             if self.path == "/login":
                 self.carregar_pagina("./templates/login.html")   
+                self.load_movies()
             elif self.path == "/cadastro":
                 self.carregar_pagina("./templates/cadastro.html")
             elif self.path == "/filmes_cadastro":
@@ -67,21 +75,16 @@ class MyHandle(SimpleHTTPRequestHandler):
             elif self.path == "/filmes_listagem":
                 self.carregar_pagina("./templates/filmes_listagem.html")
             elif self.path == "/get_movies":
-                if os.path.exists(json_filmes_cadastrados):
-                    try:
-                        with open(json_filmes_cadastrados, encoding="utf-8") as f:
-                            self.send_response(200)
-                            self.send_header("Content-type", "application/json")
-                            self.end_headers()
-                            data = json.load(f)
-                            
-                    except (json.JSONDecodeError):
-                        data = []
-                        self.send_response(404)         
+                try:
+                    self.send_response(200)
+                    self.send_header("Content-type", "application/json")
+                    self.end_headers()
+                    data = self.load_movies()
+                except (json.JSONDecodeError):
+                    data = []
+                    self.send_response(404)         
 
-                    self.wfile.write(json.dumps(data).encode("utf-8"))           
-                else:
-                    return {FileNotFoundError: "Caminho não encontrado!"}
+                self.wfile.write(json.dumps(data).encode("utf-8"))           
             else:
                 super().do_GET()
 
