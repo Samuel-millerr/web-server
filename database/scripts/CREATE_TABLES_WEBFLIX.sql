@@ -99,3 +99,9 @@ CREATE TABLE filme_produtora(
     FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
     FOREIGN KEY (id_produtora) REFERENCES produtora(id_produtora)
 );
+
+CREATE TABLE usuarios(
+    id_usuario INTEGER AUTO_INCREMENT UNIQUE,
+    usuario VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(10) NOT NULL
+);
