@@ -1,6 +1,7 @@
 import os
 import json
 from http.server import SimpleHTTPRequestHandler, HTTPServer
+from core.settings import DB_CONNECTION
 
 """A definição do handler personalizado é criado através de uma classe que herda o "SimpleHTTPRequestHandler".
 O objetivo receber e processar as respostas de um evento específico que ocorre dentro do servidor."""
@@ -103,14 +104,20 @@ class MyHandle(SimpleHTTPRequestHandler):
             password_form = data.get("password")
 
             auth: bool = False
+            
+            cursor = DB_CONNECTION.cursor()
 
-            if os.path.exists(json_usuarios_cadastrados):
-                with open(json_usuarios_cadastrados, "r", encoding="utf-8") as f:
-                    users = json.load(f)
-                
+            if cursor:
+                cursor.execute("USE webflix")
+                cursor.execute("SELECT usuario, senha FROM usuarios")
+                users = cursor.fetchall()
+
                 for user in users:
-                    if user["user"] == user_form and user["password"] == password_form:
+                    if user[0] == user_form and user[1] == password_form:
                         auth = True
+                        break
+
+                cursor.close()
                         
                 if auth:
                     self.send_response(200)
@@ -134,35 +141,23 @@ class MyHandle(SimpleHTTPRequestHandler):
             password_form = data.get("password")
             confirm_password_form = data.get("confirmPassword")
 
-            valid_user = False
+            cursor = DB_CONNECTION.cursor()
 
-            if os.path.exists(json_usuarios_cadastrados):
+            if cursor:
                 if password_form == confirm_password_form:
-                    with open(json_usuarios_cadastrados, "r", encoding="utf-8") as arquivo_json:
-                        users = json.load(arquivo_json)
-
-                    """ Pequena lógica para permitir a inserção do novo usuário no json """
-                    id_user = len(users) + 1
-                    user = {"id": id_user, "user": user_form, "password": password_form}
-                    users.append(user)
-                    
-                    with open(json_usuarios_cadastrados, "w", encoding="utf-8") as arquivo_json:
-                        json.dump(users, arquivo_json, indent=4, ensure_ascii=False)
-                            
                     valid_user = True
-            
-                    if valid_user:
-                        self.send_response(200)
-                        self.send_header("Content-Type", "application/json")
-                        self.end_headers()
-                        self.wfile.write(json.dumps({"message": "ok"}).encode("utf-8"))
-                    else:
-                        self.send_response(400)
-                        self.send_header("Content-Type", "application/json")
-                        self.end_headers()
-                        self.wfile.write(json.dumps({"message": "credenciais incorretas para realizar o cadastro"}).encode("utf-8"))
-                else:
-                    self.send_error(404, "File not found")
+                    cursor.execute("USE webflix")
+                    cursor.execute(f"INSERT INTO usuarios(usuario, senha) VALUES ('{user_form}', '{password_form}');")
+                    cursor.close()
+    
+            if valid_user:
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+            else:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
 
         elif self.path == "/send_movie":
             content_lenght = int(self.headers.get("Content-Length", 0))
