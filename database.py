@@ -1,14 +1,10 @@
 from core.settings import DB_CONNECTION, SQL_CREATE_TABLES, SQL_INSERT_DATA
-
 print("Conexão com o banco de dados sendo realizada...")
 cursor = DB_CONNECTION.cursor()
 
-if not cursor:
-    raise Exception("Conexão com o banco de dados incompleta!")
-
 cursor.execute('DROP DATABASE IF EXISTS webflix;')
 cursor.execute('CREATE DATABASE webflix;')
-cursor.execute('USE webflix;')
+cursor.execute("USE webflix;")
 
 print("Criando as tabelas do banco de dados...")
 with open(SQL_CREATE_TABLES, 'r', encoding='utf-8') as f:
@@ -31,6 +27,5 @@ for command in sql_script.split(';'):
 cursor.close()
 
 DB_CONNECTION.commit()
-DB_CONNECTION.close()
 
 print("Conexão e criação do o banco de dados completa!")

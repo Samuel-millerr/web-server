@@ -22,13 +22,14 @@ async function post_film(data) {
             },
             body: JSON.stringify(data) 
         });
-
+        
         if (response.ok) {
             console.log('Filme cadastrado com sucesso.')
             alert("Filme cadastrado com sucesso!")
             window.location.href = "/filmes_listagem"
         } else {
-            console.error("Deu pau total.")
+            alert("Esse filme já foi cadastrado no sistema.")
+            console.error("Esse filme já foi cadastrao no sistema.")
         }
     } catch(error){
         console.error("Erro de conexão: ", error);

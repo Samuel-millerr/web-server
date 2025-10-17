@@ -6,9 +6,6 @@ from core.settings import DB_CONNECTION
 """A definição do handler personalizado é criado através de uma classe que herda o "SimpleHTTPRequestHandler".
 O objetivo receber e processar as respostas de um evento específico que ocorre dentro do servidor."""
 
-json_filmes_cadastrados = "./data/movies.json"
-json_usuarios_cadastrados = "./data/users.json"
-
 class MyHandle(SimpleHTTPRequestHandler):
     def list_directory(self, path):
         """ Função utilizada para renderizar a primeira página """
@@ -24,13 +21,11 @@ class MyHandle(SimpleHTTPRequestHandler):
             self.send_error(404, "File Not Found")
         return super().list_directory(path)
 
-    def load_movies(self):
-        from core.settings import DB_CONNECTION
-
+    def get_movies(self):
         cursor = DB_CONNECTION.cursor()
 
+        cursor.execute("USE webflix;")
         cursor.execute("SELECT * FROM webflix.filme")
-
         result = cursor.fetchall()
 
         filmes_json = []
@@ -43,9 +38,34 @@ class MyHandle(SimpleHTTPRequestHandler):
                 "ano_publicacao": str(res[4]),
                 "poster": str(res[5])
             }
+
             filmes_json.append(filme)
         
+        cursor.close()
+
         return filmes_json
+    
+    def post_movies(self, data: dict):
+        cursor = DB_CONNECTION.cursor()
+
+        cursor.execute("USE webflix;")
+        cursor.execute("SELECT * FROM filme;")
+        filmes_database = cursor.fetchall()
+
+        for filme in filmes_database:
+            if filme[1] == data["title"]:
+                return True
+        
+        values = (
+            data["title"],
+            data["budget"],
+            data["movie-duration"],
+            data["year"],
+            data["poster"]
+        )
+
+        cursor.execute("INSERT INTO filme(titulo, orcamento, tempo_duracao, ano_publicacao, poster) VALUES (%s, %s, %s, %s, %s)", values)
+        return False
     
     def carregar_pagina(self, caminho):
         try:
@@ -66,7 +86,7 @@ class MyHandle(SimpleHTTPRequestHandler):
 
             if self.path == "/login":
                 self.carregar_pagina("./templates/login.html")   
-                self.load_movies()
+                self.get_movies()
             elif self.path == "/cadastro":
                 self.carregar_pagina("./templates/cadastro.html")
             elif self.path == "/filmes_cadastro":
@@ -80,7 +100,7 @@ class MyHandle(SimpleHTTPRequestHandler):
                     self.send_response(200)
                     self.send_header("Content-type", "application/json")
                     self.end_headers()
-                    data = self.load_movies()
+                    data = self.get_movies()
                 except (json.JSONDecodeError):
                     data = []
                     self.send_response(404)         
@@ -100,15 +120,14 @@ class MyHandle(SimpleHTTPRequestHandler):
             body = self.rfile.read(content_lenght).decode("utf-8")
             data = json.loads(body)
 
-            user_form = data.get("user")
-            password_form = data.get("password")
+            user_form: str = data.get("user")
+            password_form: str = data.get("password")
 
             auth: bool = False
             
             cursor = DB_CONNECTION.cursor()
 
             if cursor:
-                cursor.execute("USE webflix")
                 cursor.execute("SELECT usuario, senha FROM usuarios")
                 users = cursor.fetchall()
 
@@ -118,7 +137,6 @@ class MyHandle(SimpleHTTPRequestHandler):
                         break
 
                 cursor.close()
-                        
                 if auth:
                     self.send_response(200)
                     self.send_header("Content-Type", "application/json")
@@ -130,7 +148,7 @@ class MyHandle(SimpleHTTPRequestHandler):
                     self.end_headers()
                     self.wfile.write(json.dumps({"message": "usuário ou senha inválidos"}).encode("utf-8"))
             else:
-                self.send_error(404, "File not found")
+                self.send_error(404, "Conexão com o banco incorreta!")
 
         elif self.path == "/send_cadastro":
             content_lenght = int(self.headers.get("Content-Length", 0))
@@ -142,46 +160,50 @@ class MyHandle(SimpleHTTPRequestHandler):
             confirm_password_form = data.get("confirmPassword")
 
             cursor = DB_CONNECTION.cursor()
-
             if cursor:
                 if password_form == confirm_password_form:
                     valid_user = True
                     cursor.execute("USE webflix")
                     cursor.execute(f"INSERT INTO usuarios(usuario, senha) VALUES ('{user_form}', '{password_form}');")
                     cursor.close()
-    
-            if valid_user:
-                self.send_response(200)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
+                    DB_CONNECTION.commit()
+
+                cursor.close()
+                if valid_user:
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                else:
+                    self.send_response(400)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
             else:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
+                self.send_error(404, "Conexão com o banco incorreta!")
 
         elif self.path == "/send_movie":
             content_lenght = int(self.headers.get("Content-Length", 0))
             body = self.rfile.read(content_lenght).decode("utf-8")
             data = json.loads(body)
-            
-            if os.path.exists(json_filmes_cadastrados):
-                with open(json_filmes_cadastrados, "r", encoding="utf-8") as arquivo_json:
-                    movie = json.load(arquivo_json)
+            data_conflict = False
 
-                """ Pequena lógica para permitir a inserção de um novo filme no json """
-                id_movie = len(movie) + 1
-                data = {"id": id_movie, **data}
-                movie.append(data)
+            filme = {
+                "title": data.get("title").strip(),
+                "budget": data.get("budget").strip(),
+                "movie-duration": data.get("movie-duration").strip(),
+                "year": data.get("year").strip(),
+                "poster": data.get("poster").strip(),
+            }
 
-                with open(json_filmes_cadastrados, "w", encoding="utf-8") as arquivo_json:
-                    json.dump(movie, arquivo_json, indent=4, ensure_ascii=False)
+            data_conflict = self.post_movies(filme)
 
-                self.send_response(200)
+            if data_conflict:
+                self.send_response(409)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dumps({"message": "ok"}).encode("utf-8"))
             else:
-                self.send_error(404, "File not found")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers() 
         else:
             super().do_GET()
 

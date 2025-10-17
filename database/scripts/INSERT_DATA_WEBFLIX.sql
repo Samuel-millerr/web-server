@@ -160,8 +160,8 @@ INSERT INTO produtora (nome, id_pais) VALUES
     ('DreamWorks', 2),
     ('United Artists', 2);
 
-INSERT INTO Filme(titulo, orcamento, tempo_duracao, ano_publicacao, poster) VALUES
-    ('Old Boy', 3000000, '02:00:00', 2003,'https://midias.jb.com.br/_midias/jpg/2023/09/22/oldboy__2_-784027.jpg'),
+INSERT INTO filme(titulo, orcamento, tempo_duracao, ano_publicacao, poster) VALUES
+    ('Old Boys', 3000000, '02:00:00', 2003,'https://midias.jb.com.br/_midias/jpg/2023/09/22/oldboy__2_-784027.jpg'),
     ('Onde os fracos não tem vez', 25000000, '02:02:00', 2008, 'https://m.media-amazon.com/images/S/pv-target-images/d3ace3a42566abd92090b2823b312711b6bab90e80240a5bfaac60bb65e06d81.jpg'),
     ('Gente Grande', 75000000, '01:42:00', 2010, 'https://upload.wikimedia.org/wikipedia/pt/f/fe/Grownupsmovie.jpg'),
     ('LEGO batman: O filme', 80000000, '01:44:00', 2017, 'https://m.media-amazon.com/images/M/MV5BMTcyNTEyOTY0M15BMl5BanBnXkFtZTgwOTAyNzU3MDI@._V1_FMjpg_UX1000_.jpg'),

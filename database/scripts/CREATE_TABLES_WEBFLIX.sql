@@ -49,7 +49,7 @@ CREATE TABLE filme(
     orcamento INTEGER, 
     tempo_duracao TIME NOT NULL,
     ano_publicacao YEAR NOT NULL,
-    poster VARCHAR(255) UNIQUE
+    poster VARCHAR(510) UNIQUE
 );
 
 CREATE TABLE filme_diretor(
