@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
+
 from contextlib import contextmanager
+from typing import Generator
 
 """ CAMINHOS DOS SCRIPTS SQL """
 SQL_CREATE_TABLES = 'database/scripts/CREATE_TABLES_WEBFLIX.sql'
@@ -56,7 +58,7 @@ class DatabaseService:
         
     @staticmethod
     @contextmanager
-    def session():
+    def session() -> Generator:
         """ 
         Aqui é definido um pequeno processo para criar um cursor/session dentro do banco,
         ele será repetido em todos os momentos que o sistema necessitar enviar, buscar, editar ou
