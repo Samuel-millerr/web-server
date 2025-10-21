@@ -1,5 +1,5 @@
-from database.database_service import DatabaseService as db
-from database.database_service import SQL_CREATE_TABLES, SQL_INSERT_DATA
+from core.database_service import DatabaseService as db
+from core.database_service import SQL_CREATE_TABLES, SQL_INSERT_DATA
 
 from time import sleep
 

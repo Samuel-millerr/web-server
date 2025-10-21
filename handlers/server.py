@@ -1,7 +1,6 @@
 import os
 import json
 from http.server import SimpleHTTPRequestHandler, HTTPServer
-from core.settings import DB_CONNECTION
 
 """A definição do handler personalizado é criado através de uma classe que herda o "SimpleHTTPRequestHandler".
 O objetivo receber e processar as respostas de um evento específico que ocorre dentro do servidor."""
