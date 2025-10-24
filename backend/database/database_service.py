@@ -30,7 +30,7 @@ class DatabaseService:
             conn = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="senai",
+                password="root",
                 database="webflix"
             )
             print("[DB] Conexão com o banco realizada com sucesso.")

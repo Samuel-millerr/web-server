@@ -1,38 +1,47 @@
 from database.database_service import DatabaseService as db
 from database.database_service import SQL_CREATE_TABLES, SQL_INSERT_DATA
+from core.settings import config
+import mysql.connector as mysql
 
 from time import sleep
 
 def create_tables():
-    with db.session() as session:
-        print("Conexão com o banco de dados sendo realizada...")
-        sleep(1)
+    conn = mysql.connect(
+        host="localhost",
+        user="root",
+        password="root"
+    )
 
-        session.execute('DROP DATABASE IF EXISTS webflix;')
-        session.execute('CREATE DATABASE webflix;')
-        session.execute('USE webflix;')
+    session = conn.cursor()
 
-        print("Criando as tabelas do banco de dados...")
-        sleep(2)
-        with open(SQL_CREATE_TABLES, 'r', encoding='utf-8') as f:
-            sql_script = f.read()
+    print("Conexão com o banco de dados sendo realizada...")
+    sleep(1)
 
-        for command in sql_script.split(';'):
-            command = command.strip()
-            if command:
-                session.execute(command)
+    session.execute('DROP DATABASE IF EXISTS webflix;')
+    session.execute('CREATE DATABASE webflix;')
+    session.execute('USE webflix;')
 
-        print("Inserindo as informações no banco de dados...")
-        sleep(2)
-        with open(SQL_INSERT_DATA, 'r', encoding='utf-8') as f:
-            sql_script = f.read()
+    print("Criando as tabelas do banco de dados...")
+    sleep(2)
+    with open(SQL_CREATE_TABLES, 'r', encoding='utf-8') as f:
+        sql_script = f.read()
 
-        for command in sql_script.split(';'):
-            command =command.strip()
-            if command:
-                session.execute(command)
+    for command in sql_script.split(';'):
+        command = command.strip()
+        if command:
+            session.execute(command)
 
-        print("Conexão e criação do o banco de dados completa!")
-        sleep(1)
+    print("Inserindo as informações no banco de dados...")
+    sleep(2)
+    with open(SQL_INSERT_DATA, 'r', encoding='utf-8') as f:
+        sql_script = f.read()
+
+    for command in sql_script.split(';'):
+        command =command.strip()
+        if command:
+            session.execute(command)
+
+    print("Conexão e criação do o banco de dados completa!")
+    sleep(1)
 
 create_tables()
