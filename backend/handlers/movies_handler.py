@@ -1,10 +1,10 @@
-""" Handler para permitir a criação, atualização, adição e remoção de filmes do banco de dados """
+""" 
+Handler para permitir a criação, atualização, adição e remoção de filmes do banco de dados. 
+"""
 from core.base_handler import BaseHandler
 from core.settings import config
 
 from database.database_service import DatabaseService as db
-
-import json as json
 
 status = config.status
 
@@ -12,16 +12,27 @@ class MovieHandler(BaseHandler):
     def post_movie(self, handler):
         body = handler.parse_json_body()
 
-        print(body)
-        id_movie = body['id_movie']
-        print(id_movie)
         with db.session() as session:
             session.execute("USE webflix;")
-            session.execute("SELECT * from webflix.filme WHERE filme.id_filme = %s", (id_movie,))
+            session.execute("SELECT * from webflix.filme WHERE filme.titulo = %s;", (body["titulo"],))
             result = session.fetchone()
 
-        if result: 
-            pass
+        if not result:
+            with db.session() as session:
+                session.execute("USE webflix;")
+                
+                query = """
+                    INSERT INTO webflix.filme(titulo, orcamento, tempo_duracao, ano_publicacao, poster) 
+                    VALUES
+                        (%s, %s, %s, %s, %s, %s);
+                """
+                session.execute(query, (body["titulo"], body["orcamento"], body["tempo_duracao"], body["tempo_duracao"], body["ano_publicacao"], body["poster"]))
+                result = session.fetchone()
+
+            print(result)
+        else:
+            handler.send_json_response({'message': 'movie alredy exist!'}, status['HTTP_409_CONFLICT'])
+
 
     def get_movies(self, handler):
         with db.session() as session:

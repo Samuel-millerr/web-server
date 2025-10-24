@@ -1,7 +1,9 @@
 """ 
-Raiz do handler do servidor, tem como objetivo passar funções específicas que poderam ser usadas em todos os endpoints, como envio de resposta e conversão do body da requisição.
+Raiz do handler do servidor, tem como objetivo passar funções específicas que poderam ser usadas em todos os endpoints, 
+como envio de resposta e conversão do body da requisição.
 
-É aqui onde o SimplesHTTPHandler é chamado e tem sua criação principal, todos os outros metódos e questões do servidor vão se basear no presente nesse arquivo.
+É aqui onde o SimplesHTTPHandler é chamado e tem sua criação principal, todos os outros metódos e questões do servidor 
+vão se basear no presente nesse arquivo.
 """
 
 from http.server import SimpleHTTPRequestHandler

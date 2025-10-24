@@ -1,3 +1,8 @@
+"""
+Aqui funciona como uma 'rota' de como o servidor deve reagir, ele vefica qual metódo o frontend realizou e o envia 
+atráves da instancia do router para permitir a funcionamento da lógica daquela requisição.
+"""
+
 from http.server import HTTPServer
 from core.settings import config
 

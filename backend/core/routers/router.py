@@ -1,3 +1,8 @@
+"""
+O router é a identificação de qual path está sendo definido pelo cliente, com a identificação de qual caminho é chamado a lógica do
+endpoint em si.
+"""
+
 from handlers.auth_handler import AuthHandler
 from handlers.movies_handler import MovieHandler
 

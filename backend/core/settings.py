@@ -1,3 +1,7 @@
+"""
+Aqui ficará armazenado todas as configurações gerais do projeto, além das variáveis de ambiente
+"""
+
 from http import HTTPStatus
 
 class Config:
