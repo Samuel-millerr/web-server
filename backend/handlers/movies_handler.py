@@ -9,6 +9,20 @@ import json as json
 status = config.status
 
 class MovieHandler(BaseHandler):
+    def post_movie(self, handler):
+        body = handler.parse_json_body()
+
+        print(body)
+        id_movie = body['id_movie']
+        print(id_movie)
+        with db.session() as session:
+            session.execute("USE webflix;")
+            session.execute("SELECT * from webflix.filme WHERE filme.id_filme = %s", (id_movie,))
+            result = session.fetchone()
+
+        if result: 
+            pass
+
     def get_movies(self, handler):
         with db.session() as session:
             session.execute("USE webflix;")
@@ -37,7 +51,6 @@ class MovieHandler(BaseHandler):
             result = session.fetchone()
         
         if result:
-
             movie_json = {
                 "id": int(result[0]),
                 "titulo": str(result[1]),

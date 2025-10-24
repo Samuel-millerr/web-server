@@ -3,8 +3,9 @@ from handlers.movies_handler import MovieHandler
 
 class Router:
     def handler_post(self, handler):
-        server_path = handler.path 
-        pass 
+        server_path = handler.path
+        if  server_path.startswith('/api/movies'):
+            MovieHandler.post_movie(self, handler)
 
     def handler_get(self, handler):
         server_path = handler.path 
