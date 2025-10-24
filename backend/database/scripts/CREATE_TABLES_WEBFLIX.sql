@@ -7,7 +7,7 @@ CREATE TABLE diretor(
 	id_diretor INTEGER AUTO_INCREMENT UNIQUE,
     nome VARCHAR(100) NOT NULL,
     sobrenome VARCHAR(100) NOT NULL,
-    genero ENUM('Masculino', 'Feminino', 'Não Binario') NOT NULL,
+    genero ENUM("Masculino", "Feminino", "Não Binario") NOT NULL,
 	id_nacionalidade INTEGER NOT NULL,
     FOREIGN KEY (id_nacionalidade) REFERENCES nacionalidade(id_nacionalidade)
 );
@@ -16,7 +16,7 @@ CREATE TABLE ator(
 	id_ator INTEGER AUTO_INCREMENT UNIQUE,
     nome VARCHAR(100) NOT NULL,
     sobrenome VARCHAR(100) NOT NULL,
-    genero ENUM('Masculino', 'Feminino', 'Não Binario') NOT NULL,
+    genero ENUM("Masculino", "Feminino", "Não Binario") NOT NULL,
 	id_nacionalidade INTEGER NOT NULL,
     FOREIGN KEY (id_nacionalidade) REFERENCES nacionalidade(id_nacionalidade)
 );
@@ -46,10 +46,10 @@ CREATE TABLE produtora(
 CREATE TABLE filme(
 	id_filme INTEGER AUTO_INCREMENT UNIQUE,
     titulo VARCHAR(100) NOT NULL UNIQUE, 
-    orcamento INTEGER, 
+    orcamento INTEGER NOT NULL, 
     tempo_duracao TIME NOT NULL,
     ano_publicacao YEAR NOT NULL,
-    poster VARCHAR(510) UNIQUE
+    poster VARCHAR(510) NOT NULL
 );
 
 CREATE TABLE filme_diretor(

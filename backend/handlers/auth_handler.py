@@ -3,5 +3,5 @@ from core.base_handler import BaseHandler
 
 class AuthHandler(BaseHandler):
     def login(self):
-        self.send_json_response({'messagem': 'api rodando com sucesso'})
+        self.send_json_response({"messagem": "api rodando com sucesso"})
 

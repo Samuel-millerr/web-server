@@ -5,8 +5,8 @@ from contextlib import contextmanager
 from typing import Generator
 
 """ CAMINHOS DOS SCRIPTS SQL """
-SQL_CREATE_TABLES = 'database/scripts/CREATE_TABLES_WEBFLIX.sql'
-SQL_INSERT_DATA = 'database/scripts/INSERT_DATA_WEBFLIX.sql'
+SQL_CREATE_TABLES = "database/scripts/CREATE_TABLES_WEBFLIX.sql"
+SQL_INSERT_DATA = "database/scripts/INSERT_DATA_WEBFLIX.sql"
 
 class DatabaseService:
     """
@@ -66,7 +66,7 @@ class DatabaseService:
         O decorator contextmanager é utilizado para referenciar ao Python que esta é uma função
         generator. Em suma, um generator é uma função que prove algo e tem responsabilidades/separações 
         específicas dentro da própria função — isso é feito geralmente de maneira cronológica, sendo 
-        antes do 'yield' e depois do 'yield'. Além de fazer essa separação de responsabilidades, o 'yield'
+        antes do "yield" e depois do "yield". Além de fazer essa separação de responsabilidades, o "yield"
         também serve como return na função.
         """
 
