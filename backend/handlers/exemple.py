@@ -91,7 +91,7 @@ class MyHandle(SimpleHTTPRequestHandler):
             elif self.path == "/filmes_cadastro":
                 self.carregar_pagina("./templates/filmes_cadastro.html")
             elif self.path == "/filmes_edicao":
-                self.carregar_pagina("./templates/filmes_edicao.html")
+                self.carregar_pagina('./templates/filmes_edicao.html')
             elif self.path == "/filmes_listagem":
                 self.carregar_pagina("./templates/filmes_listagem.html")
             elif self.path == "/get_movies":
@@ -114,7 +114,7 @@ class MyHandle(SimpleHTTPRequestHandler):
     def do_POST(self):
         """ Os dois metódos POST abaixo funcionam da mesma forma, recebendo informações dos formulário do java script e realizando questões como autenticação e liberação. """
         if self.path == "/send_login":
-            """ Recebe a requisição do fetch do java script e armazena as informações na variável "data" """
+            """ Recebe a requisição do fetch do java script e armazena as informações na variável 'data' """
             content_lenght = int(self.headers.get("Content-Length", 0))
             body = self.rfile.read(content_lenght).decode("utf-8")
             data = json.loads(body)
@@ -163,7 +163,7 @@ class MyHandle(SimpleHTTPRequestHandler):
                 if password_form == confirm_password_form:
                     valid_user = True
                     cursor.execute("USE webflix")
-                    cursor.execute(f"INSERT INTO usuarios(usuario, senha) VALUES ("{user_form}", "{password_form}");")
+                    cursor.execute(f"INSERT INTO usuarios(usuario, senha) VALUES ('{user_form}', '{password_form}');")
                     cursor.close()
                     DB_CONNECTION.commit()
 
@@ -220,7 +220,7 @@ class MyHandle(SimpleHTTPRequestHandler):
 
                 """ For para verificar qual filme corresponde ao filme editado """
                 for filme in filmes:
-                    if filme["id"] == int(movie_id):
+                    if filme['id'] == int(movie_id):
                         filme.update(data)
 
                 with open(json_filmes_cadastrados, "w", encoding="utf-8") as arquivo_json:
@@ -240,14 +240,14 @@ class MyHandle(SimpleHTTPRequestHandler):
 
     def do_DELETE(self): 
         url = self.path
-        id_movie = url.split("/")[2]
+        id_movie = url.split('/')[2]
 
-        if url.split("/")[1] == "delete_movie":
+        if url.split('/')[1] == "delete_movie":
             try:
                 with open(json_filmes_cadastrados, "r", encoding="utf-8") as arquivo_json:
                     filmes = json.load(arquivo_json)
                 
-                filmes_novos = [filme for filme in filmes if filme["id"] != int(id_movie)]
+                filmes_novos = [filme for filme in filmes if filme['id'] != int(id_movie)]
 
                 with open(json_filmes_cadastrados, "w", encoding="utf-8") as arquivo_json:
                     json.dump(filmes_novos, arquivo_json, indent=4, ensure_ascii=False)

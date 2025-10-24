@@ -2,7 +2,7 @@
 O router é a identificação de qual path está sendo definido pelo cliente, com a identificação de qual caminho é chamado a lógica do
 endpoint em si.
 """
-
+import json
 from handlers.auth_handler import AuthHandler
 from handlers.movies_handler import MovieHandler
 
@@ -15,8 +15,8 @@ class Router:
     def handler_get(self, handler):
         server_path = handler.path 
         if server_path == "/api":
-            """ Fazer uma página basica para api """
-            pass
+            handler.list_api_directory()
+
         elif server_path == "/api/movies":
             MovieHandler.get_movies(self, handler)
         elif server_path.startswith("/api/movies"):

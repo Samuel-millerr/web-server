@@ -8,6 +8,7 @@ vão se basear no presente nesse arquivo.
 
 from http.server import SimpleHTTPRequestHandler
 import json as json
+import os
 
 class BaseHandler(SimpleHTTPRequestHandler):
     def send_json_response(self, data, status=200):
@@ -30,3 +31,17 @@ class BaseHandler(SimpleHTTPRequestHandler):
         """ Envia uma resposta padrão negativa """
         self.send_response(status)
         self.send_error(code=status, message=message)
+
+    def list_api_directory(self):
+        """ Função utilizada para renderizar a página da API """
+        path = os.path.join(os.getcwd(), r'core\template.html')
+        print(path)
+        try:
+            with open(path, "r", encoding="utf-8") as arquivo:
+                content = arquivo.read()
+                self.send_response(200)
+                self.send_header("content-type", "text/html; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(content.encode("utf-8"))
+        except FileNotFoundError:
+            self.send_error(404, f"Arquivo não {path} encontrado")

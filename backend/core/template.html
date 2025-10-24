@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title> Movie API </title>
+</head>
+<body>
+    <header id="summary">
+        <h1> Movie API </h1>
+
+        <table class="meta">
+            <tbody>
+                <tr>
+                    <th scope="row">Request Method:</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th scope="row">Request URL:</th>
+                    <td>http://localhost:8000/api</td>
+                </tr>
+            </tbody>
+        </table>
+    </header>
+
+    <main id="info">
+        <ol>
+            <li>
+                <code> /api/movies </code>  
+            </li>
+
+            <li>
+                <code> /api/movie/:id </code>
+            </li>
+        </ol>
+    </main>
+
+    <footer id="explanation">
+        <p>
+            Aqui é referido todos os endpoints da API, o único objetivo é demonstrar todos os caminhos possíveis,
+            as funcionalidades CRUD em geral so vão ter seu funcionamento completo caso seja usado um API Client ou o próprio
+            frontend do projeto.
+        </p>
+    </footer>
+</body>
+<style>
+    html * { padding:0; margin:0; }
+    body * { padding:10px 20px; }
+    body * * { padding:0; }
+    body { font-family: sans-serif; background:#eee; color:#000; }
+    body > :where(header, main, footer) { border-bottom:1px solid #ddd; }
+    h1 { font-weight:normal; margin-bottom:.4em; }
+    h1 small { font-size:60%; color:#666; font-weight:normal; }
+    table { border:none; border-collapse: collapse; width:100%; }
+    td, th { vertical-align:top; padding:2px 3px; }
+    th { width:12em; text-align:right; color:#666; padding-right:.5em; }
+    #info { background:#f6f6f6; }
+    #info ol { margin: 0.5em 4em; }
+    #info ol li { font-family: monospace; }
+    #summary { background: #ffc; }
+    #explanation { background:#eee; border-bottom: 0px none; }
+    pre.exception_value { font-family: sans-serif; color: #575757; font-size: 1.5em; margin: 10px 0 10px 0; }
+</style>
+</html>
