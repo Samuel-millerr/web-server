@@ -56,48 +56,48 @@ CREATE TABLE filme_diretor(
 	id_filme_diretor INTEGER AUTO_INCREMENT UNIQUE,
     id_filme INTEGER NOT NULL,
     id_diretor INTEGER NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
-    FOREIGN KEY (id_diretor) REFERENCES diretor(id_diretor)
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_diretor) REFERENCES diretor(id_diretor) ON DELETE CASCADE
 );
 
 CREATE TABLE filme_ator(
 	id_filme_ator INTEGER AUTO_INCREMENT UNIQUE,
     id_filme INTEGER NOT NULL,
     id_ator INTEGER NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
-    FOREIGN KEY (id_ator) REFERENCES ator(id_ator)
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_ator) REFERENCES ator(id_ator) ON DELETE CASCADE
 );
 
 CREATE TABLE filme_linguagem(
 	id_filme_linguagem INTEGER AUTO_INCREMENT UNIQUE,
     id_filme INTEGER NOT NULL,
     id_linguagem INTEGER NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
-    FOREIGN KEY (id_linguagem) REFERENCES linguagem(id_linguagem)
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_linguagem) REFERENCES linguagem(id_linguagem) ON DELETE CASCADE
 );
 
 CREATE TABLE filme_genero(
 	id_filme_genero INTEGER AUTO_INCREMENT UNIQUE,
     id_filme INTEGER NOT NULL, 
     id_genero INTEGER NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
-    FOREIGN KEY (id_genero) REFERENCES genero(id_genero)
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_genero) REFERENCES genero(id_genero) ON DELETE CASCADE
 );
 
 CREATE TABLE filme_pais(
 	id_filme_pais INTEGER AUTO_INCREMENT UNIQUE, 
     id_filme INTEGER NOT NULL,
     id_pais INTEGER NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
-    FOREIGN KEY (id_pais) REFERENCES pais(id_pais)
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_pais) REFERENCES pais(id_pais) ON DELETE CASCADE
 );
 
 CREATE TABLE filme_produtora(
 	id_filme_produto INTEGER AUTO_INCREMENT UNIQUE,
     id_filme INTEGER NOT NULL,
     id_produtora INTEGER  NOT NULL,
-    FOREIGN KEY (id_filme) REFERENCES filme(id_filme),
-    FOREIGN KEY (id_produtora) REFERENCES produtora(id_produtora)
+    FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE,
+    FOREIGN KEY (id_produtora) REFERENCES produtora(id_produtora) ON DELETE CASCADE
 );
 
 CREATE TABLE usuarios(

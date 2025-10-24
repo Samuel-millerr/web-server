@@ -1,7 +1,24 @@
+from http import HTTPStatus
+
 class Config:
     HOST = 'localhost'
     PORT = 8000
+    BASE_SERVER = (f"http://{HOST}:{PORT}")
+
+    status = {
+        'HTTP_200_OK': HTTPStatus.OK,
+        'HTTP_201_CREATED': HTTPStatus.CREATED,
+        'HTTP_202_ACCEPTED': HTTPStatus.ACCEPTED,
+        'HTTP_204_NO_CONTENT': HTTPStatus.NO_CONTENT,
+        'HTTP_400_BAD_REQUEST': HTTPStatus.BAD_REQUEST,
+        'HTTP_401_UNAUTHORIZED': HTTPStatus.UNAUTHORIZED,
+        'HTTP_403_FORBIDDEN': HTTPStatus.FORBIDDEN,
+        'HTTP_404_NOT_FOUND': HTTPStatus.NOT_FOUND,
+        'HTTP_405_METHOD_NOT_ALLOWED': HTTPStatus.METHOD_NOT_ALLOWED,
+        'HTTP_409_CONFLICT': HTTPStatus.CONFLICT,
+        'HTTP_422_UNPROCESSABLE_ENTITY': HTTPStatus.UNPROCESSABLE_ENTITY,
+        'HTTP_500_INTERNAL_SERVER_EROR': HTTPStatus.INTERNAL_SERVER_ERROR
+    }
 
 config = Config
 
-BASE_SERVER = ("http://{config.HOST}", {config.PORT})

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title> Cadastro </title>
+    <link rel="stylesheet" href="/static/style.css"/>
+    <script defer src="app/sing_up.js"></script>
+</head>
+<body>
+    <main>
+        <h1 class="siteTitle">Cadastro</h1>
+        <!-- A estrutura abaixo se consiste em um forms comum, com labels e inputs representando o que o usuário deve digitar -->
+        <form id="singUpForm" class="siteForm">
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="user"> Usuário </label>
+                <input type="text" class="siteInput" id="user" name="user" placeholder="Digite seu usuário"/>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="password"> Senha </label>
+                <input type="password" class="siteInput"  id="password" name="password" placeholder="Digite sua senha"/>
+            </div>
+            <div class="inputGroup"> <!-- 'div' utilizada para o alinhamento dos grupos de inputs -->
+                <label class="siteLabel" for="confirmPassword"> Confirme a Senha </label>
+                <input type="password" class="siteInput" id="confirmPassword" name="confirmPassword" placeholder="Digite sua senha novamente"/>
+            </div>
+            <button id="singUpButton" class="siteButton" type="submit"> Cadastrar </button>
+            <div class="links"> <!-- 'div' utilizada para o alinhamento dos grupos dos 'links' -->
+                <a href="./login"> Fazer Login </a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

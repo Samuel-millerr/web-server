@@ -6,7 +6,7 @@ from time import sleep
 def create_tables():
     with db.session() as session:
         print("Conexão com o banco de dados sendo realizada...")
-        sleep(2)
+        sleep(1)
 
         session.execute('DROP DATABASE IF EXISTS webflix;')
         session.execute('CREATE DATABASE webflix;')

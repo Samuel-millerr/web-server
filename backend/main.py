@@ -1,4 +1,4 @@
-from handlers._base import main
+from core.server import main
 
 if __name__ == '__main__':
     main()

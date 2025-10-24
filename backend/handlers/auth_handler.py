@@ -1,8 +1,7 @@
-from handlers._base import BaseHandler
+""" Handler de autenticação, contém rotas como de login e cadastro"""
+from core.base_handler import BaseHandler
 
 class AuthHandler(BaseHandler):
-    def do_GET(self):
-        if self.path == '/login':
-            self.login()
-        elif self.path == 'sing_up':
-            self.sing_up()
+    def login(self):
+        self.send_json_response({'messagem': 'api rodando com sucesso'})
+
