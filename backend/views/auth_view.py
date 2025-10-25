@@ -1,5 +1,5 @@
 """ Handler de autenticação, contém rotas como de login e cadastro"""
-from core.base_handler import BaseHandler
+from core.handlers.base_handler import BaseHandler
 
 class AuthHandler(BaseHandler):
     def login(self):

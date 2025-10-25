@@ -6,8 +6,6 @@ from core.settings import config
 
 from database.database_service import DatabaseService as db
 
-from urllib.parse import urlparse, parse_qs
-
 status = config.status
 
 class MovieHandler(BaseHandler):

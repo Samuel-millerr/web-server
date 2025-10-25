@@ -6,8 +6,8 @@ atráves da instancia do router para permitir a funcionamento da lógica daquela
 from http.server import HTTPServer
 from core.settings import config
 
-from core.base_handler import BaseHandler
-from core.routers.router import Router
+from core.handlers.base_handler import BaseHandler
+from core.router import Router
 
 class AppHandler(BaseHandler):
     router = Router()

@@ -2,8 +2,8 @@
 O router é a identificação de qual path está sendo definido pelo cliente, com a identificação de qual caminho é chamado a lógica do
 endpoint em si.
 """
-from handlers.auth_handler import AuthHandler
-from handlers.movies_handler import MovieHandler
+from views.auth_view import AuthHandler
+from views.movies_handler import MovieHandler
 
 class Router:
     def handler_post(self, handler):
