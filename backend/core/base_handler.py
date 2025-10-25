@@ -8,9 +8,11 @@ vão se basear no presente nesse arquivo.
 
 from http.server import SimpleHTTPRequestHandler
 import json as json
-import os
+import os as os # Mudar biblioteca
+from urllib.parse import urlsplit
 
 class BaseHandler(SimpleHTTPRequestHandler):
+    """ Parte para respostas e comunicação com o client desde json a erros ou conversão de body das requisições"""
     def send_json_response(self, data, status=200):
         """ Envia resposta JSON padrão """
         self.send_response(status)
@@ -26,16 +28,26 @@ class BaseHandler(SimpleHTTPRequestHandler):
             return json.loads(body)
         except json.JSONDecodeError:
             return None
-        
-    def send_error_response(self,  message: str, status = 500):
-        """ Envia uma resposta padrão negativa """
-        self.send_response(status)
-        self.send_error(code=status, message=message)
 
+    """ Função para permitir maior manipulação sobre a url requerida """
+    def parse_path(self, url):
+        split = urlsplit(url)
+        path_parts = split.path.strip("/").split("/") # Coleta a url sem espaço nas laterais e com separação entre as '/'
+        result = {'path': "/" + "/".join(path_parts)}
+
+        if path_parts and path_parts[-1].isdigit():
+            result["id"] = int(path_parts[-1])
+        else:
+            result["id"] = False
+
+        result["query"] = split.query.strip()
+
+        return result
+    
+    """ Função simples somente para listar o diretorio da página da API """
     def list_api_directory(self):
         """ Função utilizada para renderizar a página da API """
         path = os.path.join(os.getcwd(), r'core\template.html')
-        print(path)
         try:
             with open(path, "r", encoding="utf-8") as arquivo:
                 content = arquivo.read()

@@ -30,7 +30,7 @@ class DatabaseService:
             conn = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="root"
+                password="senai"
             )
             print("[DB] Conexão com o banco realizada com sucesso.")
             return conn
@@ -84,4 +84,3 @@ class DatabaseService:
         finally:
             cursor.close()
             conn.close()
-

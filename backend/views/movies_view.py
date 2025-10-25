@@ -6,6 +6,8 @@ from core.settings import config
 
 from database.database_service import DatabaseService as db
 
+from urllib.parse import urlparse, parse_qs
+
 status = config.status
 
 class MovieHandler(BaseHandler):
@@ -112,6 +114,9 @@ class MovieHandler(BaseHandler):
                 session.execute("USE webflix")
                 session.execute("DELETE FROM webflix.filme WHERE filme.id_filme = %s", (id_movie,))  
 
-            handler.send_error_response(status["HTTP_204_NO_CONTENT"])
+            handler.send_json_response({}, status["HTTP_204_NO_CONTENT"])
         else:
             handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
+
+    def filters_movies(self, handler, url):
+        print(url)

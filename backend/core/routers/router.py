@@ -2,41 +2,39 @@
 O router é a identificação de qual path está sendo definido pelo cliente, com a identificação de qual caminho é chamado a lógica do
 endpoint em si.
 """
-import json
 from handlers.auth_handler import AuthHandler
 from handlers.movies_handler import MovieHandler
 
 class Router:
     def handler_post(self, handler):
         server_path = handler.path
-        if  server_path == "/api/movies":
+        parse_path = handler.parse_path(server_path)
+
+        if  parse_path["path"] == "/api/movies":
             MovieHandler.post_movie(self, handler)
 
     def handler_get(self, handler):
-        server_path = handler.path 
-        if server_path == "/api":
+        server_path = handler.path
+        parse_path = handler.parse_path(server_path)
+
+        if parse_path["path"] == ("/api"):
             handler.list_api_directory()
-
-        elif server_path == "/api/movies":
+        elif parse_path["path"].startswith("/api/movies") and not parse_path["id"]:
             MovieHandler.get_movies(self, handler)
-        elif server_path.startswith("/api/movies"):
-            parts_path = server_path.split("/")
-            id_movie = parts_path[3]
-            MovieHandler.get_movie(self, handler, id_movie)
-
+        elif parse_path["path"].startswith("/api/movies") and parse_path["id"]:
+            MovieHandler.get_movie(self, handler, parse_path["id"])
+    
     def handler_put(self, handler):
         server_path = handler.path 
-        if server_path.startswith("/api/movies"):
-            parts_path = server_path.split("/")
-            id_movie = parts_path[3]
-            MovieHandler.put_movie(self, handler, id_movie)
-        pass 
+        parse_path = handler.parse_path(server_path)
+
+        if parse_path["path"].startswith("/api/movies") and parse_path["id"]:
+            MovieHandler.put_movie(self, handler, parse_path["id"]) 
 
     def handler_delete(self, handler):
         server_path = handler.path 
+        parse_path = handler.parse_path(server_path)
 
-        if server_path.startswith("/api/movies"):
-            parts_path = server_path.split("/")
-            id_movie = parts_path[3]
-            MovieHandler.delete_movie(self, handler, id_movie)
+        if parse_path["path"].startswith("/api/movies") and parse_path["id"]:
+            MovieHandler.delete_movie(self, handler, parse_path["id"])
     
