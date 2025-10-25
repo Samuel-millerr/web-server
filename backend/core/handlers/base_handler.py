@@ -32,8 +32,8 @@ class BaseHandler(SimpleHTTPRequestHandler):
     """ Função para permitir maior manipulação sobre a url requerida """
     def parse_path(self, url):
         split = urlsplit(url)
-        path_parts = split.path.strip("/").split("/") # Coleta a url sem espaço nas laterais e com separação entre as '/'
-        result = {'path': "/" + "/".join(path_parts)}
+        path_parts = split.path.strip("/").split("/") # Coleta a url sem espaço nas laterais e com separação entre as "/"
+        result = {"path": "/" + "/".join(path_parts)}
 
         if path_parts and path_parts[-1].isdigit():
             result["id"] = int(path_parts[-1])
@@ -47,7 +47,7 @@ class BaseHandler(SimpleHTTPRequestHandler):
     """ Função simples somente para listar o diretorio da página da API """
     def list_api_directory(self):
         """ Função utilizada para renderizar a página da API """
-        path = os.path.join(os.getcwd(), r'core\template.html')
+        path = os.path.join(os.getcwd(), r"core\template.html")
         try:
             with open(path, "r", encoding="utf-8") as arquivo:
                 content = arquivo.read()

@@ -24,7 +24,7 @@ class AppHandler(BaseHandler):
     def do_DELETE(self):
         self.router.handler_delete(self)
 
-def main():
+def run_server():
     """Função para iniciar o servidor, recebe a porta que deve ser utilizada, ou seja , o endereço do servidor, e o handle personalidado criado na classe acima. """
     httpd = HTTPServer((config.HOST, config.PORT), AppHandler)
     print(f"Servidor rodando na porta {config.BASE_SERVER}")
