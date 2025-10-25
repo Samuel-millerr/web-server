@@ -78,7 +78,7 @@ class MovieHandler(BaseHandler):
         else:
             handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
 
-    def put_movie(self, handler, id_movie):
+    def put_movie(self, handler, id_movie: int):
         body = handler.parse_json_body()
 
         result = MovieHandler.get_movie_by_id(id_movie)
@@ -104,17 +104,37 @@ class MovieHandler(BaseHandler):
         else:
             handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
 
-    def delete_movie(self, handler, id_movie):
+    def delete_movie(self, handler, id_movie: int):
         result = MovieHandler.get_movie_by_id(id_movie)
 
         if result:
             with db.session() as session:
-                session.execute("USE webflix")
-                session.execute("DELETE FROM webflix.filme WHERE filme.id_filme = %s", (id_movie,))  
+                session.execute("USE webflix;")
+                session.execute("DELETE FROM webflix.filme WHERE filme.id_filme = %s;", (id_movie,))  
 
             handler.send_json_response({}, status["HTTP_204_NO_CONTENT"])
         else:
             handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
 
-    def filters_movies(self, handler, url):
-        print(url)
+    def filter_movies(self, handler, query):
+        query = query.split("=")[1]
+        print(query)
+        with db.session() as session:
+            session.execute("USE webflix;")
+            session.execute("SELECT * FROM webflix.filme WHERE filme.titulo = %s;", (query,))
+            result = session.fetchall()
+
+        movies_json = []
+        for res in result:
+            movie = {
+                "id": int(res[0]),
+                "titulo": str(res[1]),
+                "orcamento": int(res[2]),
+                "tempo_duracao": str(res[3]),
+                "ano_publicacao": str(res[4]),
+                "poster": str(res[5])
+            }
+
+            movies_json.append(movie)
+        
+        handler.send_json_response(movies_json, status["HTTP_200_OK"])

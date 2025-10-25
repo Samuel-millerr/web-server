@@ -19,11 +19,13 @@ class Router:
 
         if parse_path["path"] == ("/api"):
             handler.list_api_directory()
-        elif parse_path["path"].startswith("/api/movies") and not parse_path["id"]:
+        elif parse_path["path"] == ("/api/movies") and not parse_path["query"]:
             MovieHandler.get_movies(self, handler)
         elif parse_path["path"].startswith("/api/movies") and parse_path["id"]:
             MovieHandler.get_movie(self, handler, parse_path["id"])
-    
+        elif parse_path["path"].startswith("/api/movies") and parse_path["query"]:
+            MovieHandler.filter_movies(self, handler, parse_path["query"])
+
     def handler_put(self, handler):
         server_path = handler.path 
         parse_path = handler.parse_path(server_path)

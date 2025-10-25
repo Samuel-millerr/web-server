@@ -9,7 +9,7 @@ vão se basear no presente nesse arquivo.
 from http.server import SimpleHTTPRequestHandler
 import json as json
 import os as os # Mudar biblioteca
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, unquote
 
 class BaseHandler(SimpleHTTPRequestHandler):
     """ Parte para respostas e comunicação com o client desde json a erros ou conversão de body das requisições"""
@@ -40,7 +40,7 @@ class BaseHandler(SimpleHTTPRequestHandler):
         else:
             result["id"] = False
 
-        result["query"] = split.query.strip()
+        result["query"] = unquote(split.query.strip())
 
         return result
     
