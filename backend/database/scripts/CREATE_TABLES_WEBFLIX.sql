@@ -100,8 +100,19 @@ CREATE TABLE filme_produtora(
     FOREIGN KEY (id_produtora) REFERENCES produtora(id_produtora) ON DELETE CASCADE
 );
 
-CREATE TABLE usuarios(
+CREATE TABLE usuario(
     id_usuario INTEGER AUTO_INCREMENT UNIQUE,
-    usuario VARCHAR(255) NOT NULL UNIQUE,
-    senha VARCHAR(10) NOT NULL
+    nome VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(12) NOT NULL,
+    tipo_usuario ENUM("comum", "administrador")
 );
+
+CREATE TABLE requisicoes(
+    id_requisicoes INTEGER AUTO_INCREMENT UNIQUE,
+    id_usuario INTEGER NOT NULL,
+    tipo_requisicao ENUM("Adicionar Filme", "Editar Filme") NOT NULL,
+    requisicoes_status ENUM("Aprovado", "Pendente", "Reprovado") NOT NULL,
+    data_requisicao DATETIME NOT NULL,
+    data_resposta DATETIME
+)

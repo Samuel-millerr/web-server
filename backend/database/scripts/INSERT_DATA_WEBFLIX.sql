@@ -224,6 +224,3 @@ INSERT INTO filme_pais(id_filme, id_pais) VALUES
 INSERT INTO filme_produtora(id_filme, id_produtora) VALUES
     (1, 1), (2, 2), (3, 3), (4, 5), (5, 2), (6, 4), (7, 8), (8, 1), (9, 2), (10, 9),
     (11, 5), (12, 6), (13, 9), (14, 10), (15, 3),(16, 6), (17, 4), (18, 3), (19, 10), (20, 11);
-
-INSERT INTO usuarios(usuario, senha) VALUES
-    ("samuel","1234");
