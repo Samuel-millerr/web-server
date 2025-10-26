@@ -118,10 +118,10 @@ class MovieHandler(BaseHandler):
 
     def filter_movies(self, handler, query):
         query = query.split("=")[1]
-        print(query)
+        query = f"%{query}%"
         with db.session() as session:
             session.execute("USE webflix;")
-            session.execute("SELECT * FROM webflix.filme WHERE filme.titulo = %s;", (query,))
+            session.execute("SELECT * FROM webflix.filme WHERE LOWER(titulo) LIKE %s;", (query,))
             result = session.fetchall()
 
         movies_json = []

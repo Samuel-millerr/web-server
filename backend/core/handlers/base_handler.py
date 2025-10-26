@@ -40,7 +40,7 @@ class BaseHandler(SimpleHTTPRequestHandler):
         else:
             result["id"] = False
 
-        result["query"] = unquote(split.query.strip())
+        result["query"] = unquote(split.query.strip().lower())
 
         return result
     
