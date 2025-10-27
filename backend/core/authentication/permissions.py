@@ -9,21 +9,23 @@ Ela cria um decorator que adiciona uma verificação de acesso antes da execuç�
 """
 
 from functools import wraps
-from core.autentication import Authentication
+from core.authentication.authentication import Authentication
 
-def permissao_necessaria(role_requerida):
+def permission(role):
     def wrapper(func):
         @wraps(func)
-        def inner(*args, **kwargs):
-            token = kwargs.get("token")
-            dados = Authentication.verificar_token(token)
+        def inner(*args):
+            token = args[3]
+            dados = Authentication.verify_token(token)
             
             if not dados:
+                print("[PERMISSION] Token inválido ou exirado")
                 return {"erro": "Token inválido ou expirado"}, 401
 
-            if dados["role"] != role_requerida:
+            if dados["role"] != role:
+                print("[PERMISSION] Acesso negado, role não permitida")
                 return {"erro": "Acesso negado"}, 403
             
-            return func(*args, **kwargs)
+            return func(*args)
         return inner
     return wrapper

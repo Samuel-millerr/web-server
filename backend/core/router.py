@@ -3,15 +3,19 @@ O router é a identificação de qual path está sendo definido pelo cliente, co
 endpoint em si.
 """
 from views.auth_view import AuthHandler
-from views.movies_handler import MovieHandler
+from views.movies_view import MovieHandler
 
 class Router:
     def handler_post(self, handler):
         server_path = handler.path
         parse_path = handler.parse_path(server_path)
 
-        if  parse_path["path"] == "/api/movies":
+        if parse_path["path"] == "/api/movies":
             MovieHandler.post_movie(self, handler)
+        elif parse_path["path"] == "/api/auth/login":
+            AuthHandler.login(self, handler)
+        elif parse_path["path"] == "/api/auth/sing_up":
+            AuthHandler.sing_up(self, handler)
 
     def handler_get(self, handler):
         server_path = handler.path
@@ -36,7 +40,8 @@ class Router:
     def handler_delete(self, handler):
         server_path = handler.path 
         parse_path = handler.parse_path(server_path)
+        token = handler.parse_headers()
 
         if parse_path["path"].startswith("/api/movies") and parse_path["id"]:
-            MovieHandler.delete_movie(self, handler, parse_path["id"])
+            MovieHandler.delete_movie(self, handler, parse_path["id"], token)
     

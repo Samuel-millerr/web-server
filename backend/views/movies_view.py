@@ -3,10 +3,9 @@ Handler para permitir a criação, atualização, adição e remoção de filmes
 """
 from core.handlers.base_handler import BaseHandler
 from core.settings import config
+from core.authentication.permissions import permission
 
 from database.database_service import DatabaseService as db
-
-from urllib.parse import urlparse, parse_qs
 
 status = config.status
 
@@ -23,7 +22,7 @@ class MovieHandler(BaseHandler):
 
         with db.session() as session:
             session.execute("USE webflix;")
-            session.execute("SELECT * from webflix.filme WHERE filme.titulo = %s;", (body["titulo"],))
+            session.execute("SELECT * from filme WHERE filme.titulo = %s;", (body["titulo"],))
             result = session.fetchone()
 
         if not result:
@@ -31,21 +30,21 @@ class MovieHandler(BaseHandler):
                 session.execute("USE webflix;")
                 
                 query = """
-                    INSERT INTO webflix.filme(titulo, orcamento, tempo_duracao, ano_publicacao, poster) 
+                    INSERT INTO filme(titulo, orcamento, tempo_duracao, ano_publicacao, poster) 
                     VALUES
                         (%s, %s, %s, %s, %s);
                 """
                 session.execute(query, (body["titulo"], body["orcamento"], body["tempo_duracao"], body["ano_publicacao"], body["poster"],))
 
-            handler.send_json_response({"message": "movie successfully created."}, status["HTTP_201_CREATED"])
+            handler.send_json_response({"message": "Movie successfully created"}, status["HTTP_201_CREATED"])
         else:
-            handler.send_json_response({"message": "movie alredy exist!"}, status["HTTP_409_CONFLICT"])
+            handler.send_json_response({"error": "Movie alredy exist"}, status["HTTP_409_CONFLICT"])
 
 
     def get_movies(self, handler):
         with db.session() as session:
             session.execute("USE webflix;")
-            session.execute("SELECT * FROM webflix.filme;")
+            session.execute("SELECT * FROM filme;")
             result = session.fetchall()
 
         movies_json = []
@@ -78,9 +77,9 @@ class MovieHandler(BaseHandler):
             
             handler.send_json_response(movie_json, status["HTTP_200_OK"])
         else:
-            handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
+            handler.send_json_response({"error": "Movie not found"}, status["HTTP_404_NOT_FOUND"])
 
-    def put_movie(self, handler, id_movie):
+    def put_movie(self, handler, id_movie: int):
         body = handler.parse_json_body()
 
         result = MovieHandler.get_movie_by_id(id_movie)
@@ -89,7 +88,7 @@ class MovieHandler(BaseHandler):
             with db.session() as session:
                 session.execute("USE webflix;")
                 query = """
-                    UPDATE webflix.filme 
+                    UPDATE filme 
                     SET 
                         titulo = %s, 
                         orcamento = %s,
@@ -104,19 +103,40 @@ class MovieHandler(BaseHandler):
 
             handler.send_json_response(body, status["HTTP_200_OK"])
         else:
-            handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
+            handler.send_json_response({"error": "Movie not found"}, status["HTTP_404_NOT_FOUND"])
 
-    def delete_movie(self, handler, id_movie):
+    @permission("administrador")
+    def delete_movie(self, handler, id_movie: int, token: str = None):
         result = MovieHandler.get_movie_by_id(id_movie)
 
         if result:
             with db.session() as session:
-                session.execute("USE webflix")
-                session.execute("DELETE FROM webflix.filme WHERE filme.id_filme = %s", (id_movie,))  
+                session.execute("USE webflix;")
+                session.execute("DELETE FROM filme WHERE filme.id_filme = %s;", (id_movie,))  
 
             handler.send_json_response({}, status["HTTP_204_NO_CONTENT"])
         else:
-            handler.send_json_response({"message": "movie not found."}, status["HTTP_404_NOT_FOUND"])
+            handler.send_json_response({"error": "Movie not found"}, status["HTTP_404_NOT_FOUND"])
 
-    def filters_movies(self, handler, url):
-        print(url)
+    def filter_movies(self, handler, query):
+        query = query.split("=")[1]
+        query = f"%{query}%"
+        with db.session() as session:
+            session.execute("USE webflix;")
+            session.execute("SELECT * FROM filme WHERE LOWER(titulo) LIKE %s;", (query,))
+            result = session.fetchall()
+
+        movies_json = []
+        for res in result:
+            movie = {
+                "id": int(res[0]),
+                "titulo": str(res[1]),
+                "orcamento": int(res[2]),
+                "tempo_duracao": str(res[3]),
+                "ano_publicacao": str(res[4]),
+                "poster": str(res[5])
+            }
+
+            movies_json.append(movie)
+        
+        handler.send_json_response(movies_json, status["HTTP_200_OK"])

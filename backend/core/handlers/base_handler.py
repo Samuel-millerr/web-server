@@ -19,7 +19,14 @@ class BaseHandler(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.end_headers()
         self.wfile.write(json.dumps(data).encode("utf-8"))
-
+    
+    def send_token(self, data,token, status=200):
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Authorization", f"Bearer {token}")
+        self.end_headers()
+        self.wfile.write(json.dumps(data).encode("utf-8"))
+        
     def parse_json_body(self):
         """ Lê e decodifica JSON recebido no body pelo """
         content_length = int(self.headers.get("Content-Length", 0))
@@ -28,6 +35,12 @@ class BaseHandler(SimpleHTTPRequestHandler):
             return json.loads(body)
         except json.JSONDecodeError:
             return None
+    
+    def parse_headers(self):
+        auth_header = self.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            return auth_header.split(" ")[1]
+        return None
 
     """ Função para permitir maior manipulação sobre a url requerida """
     def parse_path(self, url):
@@ -57,3 +70,4 @@ class BaseHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(content.encode("utf-8"))
         except FileNotFoundError:
             self.send_error(404, f"Arquivo não {path} encontrado")
+        
